@@ -39,7 +39,7 @@ export default {
         ],
         code: [
           { required: true, message: '请您填写验证码' },
-          { pattarn: /^\d{6}$/, message: '请填写正确的验证码' }
+          { pattern: /^\d{6}$/, message: '请填写正确的验证码' }
         ],
         agree: [
           // 自动效验
@@ -50,9 +50,17 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.myForm.validate(function (isOK) {
+      this.$refs.myForm.validate((isOK) => {
         if (isOK) {
-
+          this.$axios({
+            url: '/authorizations',
+            data: this.loginForm,
+            method: 'post'
+          }).then((result) => {
+            window.localStorage.setItem('usea-token', result.data.data.token)
+            this.$router.push('/home')
+            // 错误     this.$message() 调用的是elementui的组件
+          }).catch(() => this.$message({ typt: 'warning', message: '您的手机或验证码错误' }))
         }
       })
     }
