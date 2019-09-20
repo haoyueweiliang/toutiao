@@ -27,6 +27,7 @@
 <script>
 export default {
   data () {
+    // 自动效验函数
     let validator = function (rule, value, callBack) {
       value ? callBack() : callBack(new Error('请您勾选同意该协议'))
     }
