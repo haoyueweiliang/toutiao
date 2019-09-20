@@ -7,14 +7,14 @@
       </el-col>
       <el-col :span='4' class='icon'>
         <img :src="userInfo.photo?userInfo.photo:defualticon" alt="">
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" @command='commandClick'>
       <span class="el-dropdown-link">
         {{userInfo.name}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>个人信息</el-dropdown-item>
-        <el-dropdown-item >git地址</el-dropdown-item>
-        <el-dropdown-item >退出</el-dropdown-item>
+        <el-dropdown-item command='account'>个人信息</el-dropdown-item>
+        <el-dropdown-item command='git'>git地址</el-dropdown-item>
+        <el-dropdown-item command='lgout'>退出</el-dropdown-item>
 
       </el-dropdown-menu>
     </el-dropdown>
@@ -42,6 +42,18 @@ export default {
       }).then((result) => {
         this.userInfo = result.data.data
       })
+    },
+    // 公共点击事件
+    commandClick (key) {
+      if (key === 'account') {
+        // 账户信息
+      } else if (key === 'git') {
+        window.localtion.href('https://github.com/haoyueweiliang/toutiao.git')
+      } else {
+        // 回到login页面   删除token
+        window.localStorage.clear()
+        this.$router.push('/login')
+      }
     }
   },
   created () {
