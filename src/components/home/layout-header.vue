@@ -47,8 +47,9 @@ export default {
     commandClick (key) {
       if (key === 'account') {
         // 账户信息
+        this.$router.push('/home/account')
       } else if (key === 'git') {
-        window.localtion.href('https://github.com/haoyueweiliang/toutiao.git')
+        window.location.href = 'https://github.com/haoyueweiliang/toutiao.git'
       } else {
         // 回到login页面   删除token
         window.localStorage.clear()
