@@ -7,7 +7,7 @@
        <el-container>
          <!-- 顶部 -->
            <el-header>
-             <header-a></header-a>
+             <layout-header></layout-header>
            </el-header>
            <el-main>
                <!-- 二级容器 -->
@@ -21,13 +21,14 @@
 </template>
 
 <script>
-import layoutAside from '../../components/home/layout-aside'
-import headerA from '../../components/home/layout-header'
+// 已全局同意注册可删除
+// import layoutAside from '../../components/home/layout-aside'
+// import headerA from '../../components/home/layout-header'
 export default {
-  components: {
-    'layout-aside': layoutAside,
-    'header-a': headerA
-  }
+  // components: {
+  //   'layout-aside': layoutAside,
+  //   'layout-header': layoutHeader
+  // }
 }
 </script>
 
