@@ -6,10 +6,10 @@
         <span class="title">江苏传智播客教育科技股份有限公司</span>
       </el-col>
       <el-col :span='4' class='icon'>
-        <img src="../../assets/img/avatar.jpg" alt="">
+        <img :src="userInfo.photo?userInfo.photo:defualticon" alt="">
         <el-dropdown trigger="click">
       <span class="el-dropdown-link">
-        皓月微凉<i class="el-icon-arrow-down el-icon--right"></i>
+        {{userInfo.name}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>个人信息</el-dropdown-item>
@@ -25,7 +25,28 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      userInfo: {},
+      defualticon: require('../../assets/img/avatar.jpg')
+    }
+  },
+  methods: {
+    // 获取用户资料
+    getUserInfo () {
+      // 获取token
+      let token = window.localStorage.getItem('user-token')
+      this.$axios({
+        url: '/user/profile',
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then((result) => {
+        this.userInfo = result.data.data
+      })
+    }
+  },
+  created () {
+    this.getUserInfo()
+  }
 }
 </script>
 
@@ -39,7 +60,8 @@ export default {
   .icon{
 
     img{
-       font-size:30px;
+       width: 40px;
+       height: 40px;
        border-radius: 50%;
        vertical-align: middle;
 
