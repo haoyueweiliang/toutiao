@@ -35,12 +35,12 @@ export default {
     // 获取用户资料
     getUserInfo () {
       // 获取token
-      let token = window.localStorage.getItem('user-token')
+      // let token = window.localStorage.getItem('user-token')
       this.$axios({
-        url: '/user/profile',
-        headers: { 'Authorization': `Bearer ${token}` }
+        url: '/user/profile'
+        // headers: { 'Authorization': `Bearer ${token}` }
       }).then((result) => {
-        this.userInfo = result.data.data
+        this.userInfo = result.data
       })
     },
     // 公共点击事件
@@ -68,7 +68,7 @@ export default {
   height: 50px;
 
   .title{
-    margin-left: 4px;
+    margin-left: 3px;
   }
   .icon{
 

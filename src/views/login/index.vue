@@ -59,10 +59,11 @@ export default {
             method: 'post'
           }).then((result) => {
             // console.log(result)
-            window.localStorage.setItem('user-token', result.data.data.token)
+            window.localStorage.setItem('user-token', result.data.token)
             this.$router.push('/home')
             // 错误     this.$message() 调用的是elementui的组件
-          }).catch(() => this.$message({ typt: 'warning', message: '您的手机或验证码错误' }))
+          // }).catch(() => this.$message({ typt: 'warning', message: '您的手机或验证码错误' }))
+          })
         }
       })
     }
