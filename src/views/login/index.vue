@@ -5,13 +5,13 @@
     <div class='title'>
         <img src="../../assets/img/logo_index.png" alt="">
     </div>
-    <!-- 表单 -->
-<el-form :model='loginForm' ref='myForm' :rules='loginRules'>
+    <!-- 表单   表单数据       $值            效验数据               显示图标-->
+<el-form :model='loginForm' ref='myForm' :rules='loginRules' status-icon=true>
 <el-form-item prop='mobile'>
-<el-input v-model='loginForm.mobile' placeholder="请输入手机号"></el-input>
+<el-input   v-model='loginForm.mobile' placeholder="请输入手机号"></el-input>
 </el-form-item>
 <el-form-item prop='code'>
-<el-input v-model='loginForm.code' placeholder="请输入验证码" style='width:65%'></el-input><el-button style='float:right'>发送验证码</el-button>
+<el-input  v-model='loginForm.code' placeholder="请输入验证码" style='width:65%'></el-input><el-button style='float:right'>发送验证码</el-button>
 </el-form-item>
 <el-form-item prop='agree'>
 <el-checkbox v-model='loginForm.agree' >我已阅读并同意用户协议和隐私条款</el-checkbox>
