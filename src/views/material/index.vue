@@ -3,8 +3,8 @@
         <bread-crumb slot='header'>
         <template slot='title'>素材列表</template>
         </bread-crumb>
-        <!-- 标签页   -->
-         <el-tabs v-model="activeName" @tab-click="handleClick" >
+        <!-- 标签页   @tab-click="getMaterial"  点击-根据activeName得值改变收藏或全部-->
+         <el-tabs v-model="activeName" @tab-click=" getMaterial" >
     <el-tab-pane label="全部图片" name="all">
         <!-- 全部图片 -->
         <div class='allimg'>
@@ -22,10 +22,7 @@
         <div class='allimg'>
             <el-card v-for="item in list " :key='item.id' class="imgitem">
             <img :src="item.url" alt="" >
-            <div class="icon">
-                <i class="el-icon-star-on" :style='{color: item.is_collected ? "red": "#000"}'></i>
-            <i class="el-icon-delete-solid"></i>
-            </div>
+
         </el-card>
         </div>
     </el-tab-pane>
@@ -47,7 +44,7 @@ export default {
       this.$axios({
         url: '/user/images',
         // false  表示全部图片
-        params: { collect: false }
+        params: { collect: this.activeName === 'Collection' }
       }).then((result) => {
         this.list = result.data.results
         // console.log(this.list)
@@ -55,9 +52,12 @@ export default {
     }
     // 点击切换页签  改变activeName值
     // handleClick () {
-    //     if(this.activeName === 'all'){
-
-    //     }
+    //   if (this.activeName === 'all') {
+    //     this.getMaterial(false)
+    //   }
+    //   if (this.activeName === 'Collection') {
+    //     this.getMaterial(true)
+    //   }
     // }
   },
   created () {
