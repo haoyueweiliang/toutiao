@@ -82,7 +82,7 @@ export default {
     },
     // 点击修改开关评论
     openorClose (row) {
-      // console.log(row)  根据评论状态 调用接口更改开关评论的显示
+      console.log(row) // 根据评论状态 调用接口更改开关评论的显示
       let mess = row.comment_status ? '关闭' : '打开'
       this.$confirm(`您确定${mess}此评论吗`).then(() => {
         this.$axios({

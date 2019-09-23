@@ -3,6 +3,10 @@
     <bread-crumb slot="header">
       <template slot="title">素材列表</template>
     </bread-crumb>
+    <!-- 上传 图片   :http-request自定义上传   默认不显示上传成功:show-file-list="false"-->
+    <el-upload action='' :show-file-list="false" :http-request="locadimg" class='uploadimg'>
+        <el-button type="primary">上传图片</el-button>
+    </el-upload>
     <!-- 标签页   @tab-click="getMaterial"  点击-根据activeName得值改变收藏或全部   因为页码不同 所以更换地方发为changetab -->
     <el-tabs v-model="activeName" @tab-click="changetab">
       <el-tab-pane label="全部图片" name="all">
@@ -11,8 +15,8 @@
           <el-card v-for="item in list " :key="item.id" class="imgitem">
             <img :src="item.url" alt />
             <div class="icon">
-              <i class="el-icon-star-on" :style='{color: item.is_collected ? "red": "#000"}'></i>
-              <i class="el-icon-delete-solid"></i>
+              <i @click='Collectionimg(item)' class="el-icon-star-on" :style='{color: item.is_collected ? "red": "#000"}'></i>
+              <i class="el-icon-delete-solid"  @click='deleteimg(item.id)'></i>
             </div>
           </el-card>
         </div>
@@ -51,6 +55,21 @@ export default {
     }
   },
   methods: {
+    // 上传图片方法
+    locadimg (params) {
+      // console.log(params)
+
+      const data = new FormData() // 声明一个新的表单
+      data.append('image', params.file)
+      // 上传文件
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data
+      }).then(() => {
+        this.getMaterial()
+      })
+    },
 
     // 当页码改变时 会传入当前页面
     changepage (newpage) {
@@ -76,7 +95,7 @@ export default {
         this.page.pageSize = result.data.per_page
         // console.log(this.list)     //每次数据更新都会重新赋值  所以全部与收藏 公用一个接口 返回数据却不相同
       })
-    }
+    },
     // 点击切换页签  改变activeName值
     // handleClick () {
     //   if (this.activeName === 'all') {
@@ -86,6 +105,31 @@ export default {
     //     this.getMaterial(true)
     //   }
     // }
+
+    // 点击收藏反收藏
+    Collectionimg (item) {
+      // let id = item.id
+      this.$axios({
+        url: `/user/images/${item.id}`,
+        method: 'put',
+        data: { collect: !item.is_collected }
+      }).then(() => {
+        this.getMaterial()
+      })
+    },
+    // 删除图片
+    deleteimg (id) {
+      // console.log(id)
+
+      this.$confirm('您确认删除此条信息吗？').then(() => {
+        this.$axios({
+          url: `/user/images/${id}`,
+          method: 'delete'
+        }).then(() => {
+          this.getMaterial()
+        })
+      })
+    }
   },
   created () {
     this.getMaterial()
@@ -94,6 +138,13 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.uploadimg{
+    position: absolute;
+    right: 20px;
+    margin-top: -10px;
+    z-index:10
+
+}
 .allimg {
   display: flex;
   flex-wrap: wrap;

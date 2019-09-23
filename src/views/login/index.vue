@@ -6,7 +6,7 @@
         <img src="../../assets/img/logo_index.png" alt="">
     </div>
     <!-- 表单   表单数据       $值            效验数据               显示图标-->
-<el-form :model='loginForm' ref='myForm' :rules='loginRules' status-icon=true>
+<el-form :model='loginForm' ref='myForm' :rules='loginRules' :status-icon=true>
 <el-form-item prop='mobile'>
 <el-input   v-model='loginForm.mobile' placeholder="请输入手机号"></el-input>
 </el-form-item>

@@ -6,7 +6,7 @@ import jsonBig from 'json-bigint' // 运行时安装  此三方包
 import Message from 'element-ui'
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0' // 常态值
 axios.defaults.transformResponse = [function (data) {
-  return jsonBig.parse(data) // 三方包将json.parse 替换   可以保证大数字的准确性  但是记得得到大数字转化为字符串 toString
+  return data ? jsonBig.parse(data) : {} // 三方包将json.parse 替换   可以保证大数字的准确性  但是记得得到大数字转化为字符串 toString
 }]
 //     拦截机           请求                  配置参数
 axios.interceptors.request.use(function (config) {
