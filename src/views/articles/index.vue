@@ -41,7 +41,7 @@
   </el-form-item>
      </el-form>
     <!-- 数据 -->
-    <div class='title'>共找到{{total_count}}条符合条件的内容</div>
+    <div class='title'>共找到{{page.total}}条符合条件的内容</div>
     <div class="articlesdata" v-for='(item,index) in list ' :key='index'>
 
         <div class='item'>
@@ -57,10 +57,22 @@
             </div>
         </div>
         <div class="statusitem">
-            <i class="el-icon-edit">修改</i>
-            <i class="el-icon-delete">删除</i>
+            <i class="el-icon-edit" @click='updatedata(item.id)'>修改</i>
+            <i class="el-icon-delete" @click='deletedata(item.id)'>删除</i>
         </div>
     </div>
+    <el-row type='flex' justify="center" style='margin:20px 0'>
+        <!--   @current-change='' -->
+        <el-pagination
+ @current-change='changePage'
+  background
+  layout="prev, pager, next"
+  :total="page.total"
+  page-size:page.pageSize
+  current-page:page.currentPage>
+</el-pagination>
+
+    </el-row>
   </el-card>
 </template>
 
@@ -77,7 +89,13 @@ export default {
         date: '' // 时间
 
       },
-      channels: [] // 频道
+      channels: [], // 频道
+      // 分页
+      page: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 0
+      }
     }
   },
   methods: {
@@ -88,7 +106,12 @@ export default {
         params // 条件参数
       }).then((result) => {
         this.list = result.data.results
-        this.total_count = result.data.total_count
+        // this.total_count = result.data.total_count
+        // 分页
+        this.page.currentPage = result.data.page
+        this.page.pageSize = result.data.per_page
+        this.page.total = result.data.total_count
+
         // console.log(this.list)
       })
     },
@@ -101,17 +124,43 @@ export default {
         // console.log(this.channels)
       })
     },
-    // 变化条件    通过值改变事件  得到变化变化的条件   然后进行axios请求
     // 由于formdata 都是最新的值  所以三个值改变事件  绑定这一个方法即可
+    // 变化条件    通过值改变事件  得到变化变化的条件   然后进行axios请求   g改变条件冲第一页开始
     changeCondition () {
+      this.page.currentPage = 1
+      this.queryarticles()
+    },
+    // 页码改变事件   调用带条件的事件   g改变条件冲第一页开始
+    changePage (newpage) {
+      this.page.currentPage = newpage
+      this.queryarticles()
+    },
+    // 封装方法  带条件的查询
+    queryarticles () {
       let params = {
         //  时间  先要判断时间有没有   没有为null  时间绑定的是一个数组 [开始，结束]
         begin_pubdate: this.formData.date.length ? this.formData.date[0] : null, // 时间开始
         end_pubdate: this.formData.date.length > 1 ? this.formData.date[1] : null, // 时间结束
         status: this.formData.status === 5 ? null : this.formData.status, // 什么都不传代表全部 借口要求  所有  null  radio 必须写值
-        channel_id: this.formData.channel_id // 频道id
+        channel_id: this.formData.channel_id, // 频道id
+        // 页码
+        per_page: this.page.pageSize,
+        page: this.page.currentPage
+
       }
       this.getarticlesData(params)
+    },
+    // 删除  139111111账号已发表的不能删   记住
+    deletedata (id) {
+      this.$confirm('您确定要删除此条信息吗？').then(() => {
+        this.$axios({
+          // id  是大数字
+          url: `/articles/${id.toString()}`,
+          method: 'delete'
+        }).then(() => {
+          this.queryarticles()
+        })
+      })
     }
 
   },
@@ -205,6 +254,7 @@ export default {
             i{
                 margin-left: 15px;
                 font-size:12px;
+                cursor: pointer;  //小手
 
             }
         }
