@@ -161,6 +161,10 @@ export default {
           this.queryarticles()
         })
       })
+    },
+    // 修改文章
+    updatedata (id) {
+      this.$router.push(`/home/publish/${id.toString()}`) // 大数字转化
     }
 
   },

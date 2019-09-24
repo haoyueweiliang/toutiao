@@ -79,13 +79,15 @@ export default {
     // changeradio () {
     //   alert(this.formData.cover.type)
     // }
-    // 发表文章   存为草稿
+    // 发表文章   存为草稿    ==   x修改文章
     publish (draft) {
       this.$refs.publishForm.validate((isOK) => {
         if (isOK) {
+          // 判断有无 id  有编辑  无发表文件  三元表达式判断
+          let { articlesId } = this.$route.params
           this.$axios({
-            url: 'articles',
-            method: 'post',
+            url: articlesId ? `/articles/${articlesId}` : '/articles',
+            method: articlesId ? 'put' : 'post',
             params: { draft },
             data: this.formData
           }).then(() => {
@@ -94,10 +96,22 @@ export default {
           })
         }
       })
+    },
+    // 根据文章id  获取详情
+    getArticlesid (articlesId) {
+      this.$axios({
+        url: `articles/${articlesId}`
+      }).then((result) => {
+        this.formData = result.data
+      })
     }
+
   },
   created () {
     this.getchannels()
+    // 根据修改可获得id   获得为修改传值   没获得为添加
+    let { articlesId } = this.$route.params
+    articlesId && this.getArticlesid(articlesId)
   }
 }
 </script>
