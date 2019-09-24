@@ -57,19 +57,19 @@
             </div>
         </div>
         <div class="statusitem">
-            <i class="el-icon-edit" @click='updatedata(item.id)'>修改</i>
-            <i class="el-icon-delete" @click='deletedata(item.id)'>删除</i>
+            <span @click='updatedata(item.id)'><i class="el-icon-edit" >修改</i></span>
+            <span  @click='deletedata(item.id)'><i class="el-icon-delete">删除</i></span>
         </div>
     </div>
     <el-row type='flex' justify="center" style='margin:20px 0'>
-        <!--   @current-change='' -->
+        <!-- 分页-->
         <el-pagination
  @current-change='changePage'
   background
   layout="prev, pager, next"
   :total="page.total"
-  page-size:page.pageSize
-  current-page:page.currentPage>
+  :page-size='page.pageSize'
+  :current-page='page.currentPage'>
 </el-pagination>
 
     </el-row>
@@ -130,7 +130,7 @@ export default {
       this.page.currentPage = 1
       this.queryarticles()
     },
-    // 页码改变事件   调用带条件的事件   g改变条件冲第一页开始
+    // 页码改变事件   调用带条件的事件   改变条件从第一页开始
     changePage (newpage) {
       this.page.currentPage = newpage
       this.queryarticles()
@@ -150,7 +150,7 @@ export default {
       }
       this.getarticlesData(params)
     },
-    // 删除  139111111账号已发表的不能删   记住
+    // 删除  139111111账号已发表的不能删  可删除草稿   记住
     deletedata (id) {
       this.$confirm('您确定要删除此条信息吗？').then(() => {
         this.$axios({
@@ -176,16 +176,12 @@ export default {
       switch (value) {
         case 0 :
           return '草稿'
-
         case 1 :
           return '待审核'
-
         case 2:
           return '已发表'
-
         case 3 :
           return '审核失败'
-
         case 4 :
           return '已删除'
       }
@@ -195,16 +191,12 @@ export default {
       switch (value) {
         case 0 :
           return 'warning'
-
         case 1 :
           return 'info'
-
         case 2:
           return 'sussess'
-
         case 3 :
           return 'danger'
-
         case 4 :
           return 'denger'
       }
