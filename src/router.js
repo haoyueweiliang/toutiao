@@ -32,10 +32,10 @@ export default new Router({
           path: 'articles', // 内容列表
           component: () => import('./views/articles')
         },
-        // {
-        //   path: 'publish', // 发布文章
-        //   component: () => import('./views/publish')
-        // },
+        {
+          path: 'publish', // 发布文章
+          component: () => import('./views/publish')
+        },
         {
           path: 'publish/:articlesId', // 修改文章文章
           component: () => import('./views/publish')
@@ -43,6 +43,10 @@ export default new Router({
         {
           path: 'publish/:articlesId', // 修改文章文章
           component: () => import('./views/publish')
+        },
+        {
+          path: 'account', // 账户信息
+          component: () => import('./views/account')
         }
       ]
     }, {
