@@ -1,42 +1,43 @@
 <template>
-<!-- 发布文章 -->
+  <!-- 发布文章 -->
   <el-card>
-      <bread-crumb slot='header'>
+    <bread-crumb slot='header'>
       <template slot='title'>
-          发布文章
+        发布文章
       </template>
     </bread-crumb>
     <!-- 表单效验 -->
-    <el-form style="margin-left:100px" :model="formData"  :rules="formDataRules" ref='publishForm'>
-        <!-- 标题 -->
-        <el-form-item label="标题" prop='title' >
-            <el-input v-model="formData.title" style="width:60%"></el-input>
-        </el-form-item >
-        <!-- 内容 -->
-        <el-form-item label='内容' prop='content'>
-            <quill-editor  v-model="formData.content" style='height:300px'></quill-editor>
-        </el-form-item>
-        <!-- 封面标题 -->
-        <el-form-item label="封面" prop="cover" style='margin-top:120px'>
-              <el-radio-group   v-model="formData.cover.type">
-                  <!-- // 封面类型 -1:自动，0-无图，1-1张，3-3张 -->
-                <el-radio :label="1">单图</el-radio>
-                <el-radio :label="3">三图</el-radio>
-                <el-radio :label="0">无图</el-radio>
-                <el-radio :label="-1">自动</el-radio>
-            </el-radio-group>
-        </el-form-item>
-        <!-- 频道   v-model="channels"-->
-        <el-form-item label="频道" prop="channel_id">
-             <el-select v-model="formData.channel_id" >
-                <el-option v-for='item in channels ' :key='item.id' :label="item.name" :value='item.id'></el-option>
-            </el-select>
-        </el-form-item>
-        <!-- 发表 -->
-        <el-form-item >
-             <el-button type="primary" style="margin-left:40px" @click="publish(false)">发表</el-button>
-             <el-button  @click="publish(true)">存入草稿</el-button>
-        </el-form-item>
+    <el-form style="margin-left:100px" :model="formData" :rules="formDataRules" ref='publishForm'>
+      <!-- 标题 -->
+      <el-form-item label="标题" prop='title'>
+        <el-input v-model="formData.title" style="width:60%"></el-input>
+      </el-form-item>
+      <!-- 内容 -->
+      <el-form-item label='内容' prop='content'>
+        <quill-editor v-model="formData.content" style='height:300px'></quill-editor>
+      </el-form-item>
+      <!-- 封面标题 -->
+      <el-form-item label="封面" prop="cover" style='margin-top:120px'>
+        <el-radio-group v-model="formData.cover.type">
+          <!-- // 封面类型 -1:自动，0-无图，1-1张，3-3张 -->
+          <el-radio :label="1">单图</el-radio>
+          <el-radio :label="3">三图</el-radio>
+          <el-radio :label="0">无图</el-radio>
+          <el-radio :label="-1">自动</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <!-- 频道   v-model="channels"-->
+      <el-form-item label="频道" prop="channel_id">
+        <el-select v-model="formData.channel_id">
+          <el-option v-for='item in channels ' :key='item.id' :label="item.name" :value='item.id'>
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <!-- 发表 -->
+      <el-form-item>
+        <el-button type="primary" style="margin-left:40px" @click="publish(false)">发表</el-button>
+        <el-button @click="publish(true)">存入草稿</el-button>
+      </el-form-item>
     </el-form>
   </el-card>
 </template>
@@ -111,11 +112,13 @@ export default {
     this.getchannels()
     // 根据修改可获得id   获得为修改传值   没获得为添加
     let { articlesId } = this.$route.params
+<<<<<<< Updated upstream
     articlesId && this.getArticlesid(articlesId)
+=======
+>>>>>>> Stashed changes
   }
 }
 </script>
 
 <style>
-
 </style>

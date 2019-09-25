@@ -49,7 +49,7 @@ axios.interceptors.response.use(function (response) {
   }
   Message({ messagex: message })
   // 终止错误   不在进入catch
-  return new Promise(function () {})
+  return new Promise(function () { })
 })
 // export default axios
 // 导出  方法二   全局注册 axios
