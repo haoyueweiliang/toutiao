@@ -1,6 +1,7 @@
 <template>
   <!-- 封面组件 -->
   <div class="cover-img">
+    <!-- 点击图片要传递索引 -->
     <div v-for='(item,index) in images' :key='index' @click="openDialog(index)" class="cove-item">
       <img :src="item ? item : defaultImg" alt="">
     </div>
@@ -47,6 +48,7 @@ export default {
   margin-left: 60px;
   .cove-item {
     border: 1px solid #ccc;
+    padding: 2px;
     padding: 10px;
     width: 220px;
     height: 220px;
